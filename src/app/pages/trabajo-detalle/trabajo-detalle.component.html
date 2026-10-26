@@ -1,0 +1,94 @@
+@if (error) {
+  <div class="container seccion">
+    <div class="alerta-error">{{ error }}</div>
+    <a routerLink="/galeria" class="volver-link">← Volver a Galería</a>
+  </div>
+}
+
+@if (trabajo) {
+  <div class="pagina-header">
+    <div class="container">
+      <a routerLink="/galeria" class="volver-link">← Volver a Galería</a>
+      <span class="trabajo-categoria-badge">{{ trabajo.categoriaNombre }}</span>
+      <h1>{{ trabajo.titulo }}</h1>
+      @if (trabajo.ciudad) {
+        <p class="trabajo-ciudad">📍 {{ trabajo.ciudad }}</p>
+      }
+    </div>
+  </div>
+
+  <div class="container seccion">
+    <div class="detalle-layout">
+      <!-- ─── Galería de medios ─── -->
+      <div class="galeria-col">
+        <!-- Media principal (grande) -->
+        <div class="media-principal">
+          @if (trabajo.media.length === 0) {
+            <img src="assets/placeholder.png" alt="Sin imagen" class="media-img-principal" />
+          } @else if (trabajo.media[mediaSeleccionado].tipo === 'video') {
+            <video
+              [src]="urlMedia(trabajo.media[mediaSeleccionado].url)"
+              controls
+              class="media-video-principal"
+            ></video>
+          } @else {
+            <img
+              [src]="urlMedia(trabajo.media[mediaSeleccionado].url)"
+              [alt]="trabajo.titulo"
+              class="media-img-principal"
+              (error)="$event.target.setAttribute('src', 'assets/placeholder.png')"
+            />
+          }
+        </div>
+
+        <!-- Miniaturas -->
+        @if (trabajo.media.length > 1) {
+          <div class="miniaturas">
+            @for (m of trabajo.media; track m.id; let i = $index) {
+              <button
+                class="miniatura-btn"
+                [class.miniatura-activa]="i === mediaSeleccionado"
+                (click)="mediaSeleccionado = i"
+              >
+                @if (m.tipo === 'video') {
+                  <span class="miniatura-video-icon">▶</span>
+                } @else {
+                  <img
+                    [src]="urlMedia(m.miniaturaUrl || m.url)"
+                    [alt]="'Media ' + (i+1)"
+                    class="miniatura-img"
+                    (error)="$event.target.setAttribute('src', 'assets/placeholder.png')"
+                  />
+                }
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- ─── Info del trabajo ─── -->
+      <div class="info-col">
+        <div class="info-card">
+          <h2>Descripción</h2>
+          <p class="descripcion-texto">{{ trabajo.descripcion }}</p>
+
+          @if (trabajo.fechaTrabajo) {
+            <div class="dato-row">
+              <span class="dato-label">Fecha de realización:</span>
+              <span>{{ trabajo.fechaTrabajo }}</span>
+            </div>
+          }
+
+          <!-- Botón de cotización: lleva a /cotizacion con la categoriaId del trabajo -->
+          <a
+            [routerLink]="['/cotizacion']"
+            [queryParams]="{ categoriaId: trabajo.categoriaId }"
+            class="btn-cotizar-detalle"
+          >
+            Pedir cotización similar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+}

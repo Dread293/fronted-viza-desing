@@ -1,0 +1,121 @@
+.pagina-header {
+  background: linear-gradient(135deg, var(--color-negro) 0%, #1a0000 100%);
+  border-bottom: 3px solid var(--color-rojo);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.pagina-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.pagina-header p { color: #aaa; }
+
+/* Chips de filtro */
+.filtros-wrap {
+  background: var(--color-fondo-alt);
+  border-bottom: 1px solid var(--color-borde);
+  padding: 1rem 0;
+  position: sticky;
+  top: 64px;
+  z-index: 50;
+}
+.filtros-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.chip {
+  background: var(--color-card);
+  border: 1.5px solid var(--color-borde);
+  color: var(--color-texto);
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.chip:hover {
+  border-color: var(--color-rojo);
+  color: var(--color-rojo);
+}
+.chip-activo {
+  background: var(--color-rojo) !important;
+  border-color: var(--color-rojo) !important;
+  color: #fff !important;
+}
+
+/* Grid de galería */
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.trabajo-card {
+  background: var(--color-card);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid var(--color-borde);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.trabajo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.trabajo-img-wrap {
+  height: 210px;
+  overflow: hidden;
+  position: relative;
+}
+.trabajo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.trabajo-card:hover .trabajo-img { transform: scale(1.05); }
+.trabajo-categoria {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: var(--color-rojo);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+.trabajo-destacado {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(0,0,0,0.7);
+  color: #fbbf24;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+}
+.trabajo-info {
+  padding: 1rem 1.25rem;
+}
+.trabajo-info h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 0.35rem;
+}
+.trabajo-ciudad {
+  font-size: 0.83rem;
+  color: var(--color-gris);
+}
+.estado-vacio {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--color-gris);
+  font-size: 1.1rem;
+}

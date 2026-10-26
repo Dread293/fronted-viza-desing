@@ -1,0 +1,106 @@
+<div class="registro-wrapper">
+  <div class="registro-card">
+    <div class="registro-header">
+      <a routerLink="/" class="logo">
+        <span class="logo-viza">VIZA</span><span class="logo-design">Design</span>
+      </a>
+      <h2>Crear Cuenta</h2>
+      <p>Regístrate para solicitar cotizaciones y ver el estado de tus proyectos</p>
+    </div>
+
+    @if (errorMensaje) {
+      <div class="alerta-error">
+        {{ errorMensaje }}
+      </div>
+    }
+
+    @if (exito) {
+      <div class="alerta-exito">
+        ¡Cuenta creada con éxito! Ahora puedes <a routerLink="/login" class="link-destacado">iniciar sesión</a>.
+      </div>
+    } @else {
+      <form (ngSubmit)="registrar()" class="registro-form">
+        <div class="form-group">
+          <label for="nombre" class="form-label">Nombre Completo o Empresa *</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="nombre"
+            required
+            class="form-control"
+            placeholder="Juan Pérez o Mi Negocio SAC"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="telefono" class="form-label">Teléfono / WhatsApp *</label>
+          <input
+            type="tel"
+            id="telefono"
+            name="telefono"
+            [(ngModel)]="telefono"
+            required
+            class="form-control"
+            placeholder="+51 987 654 321"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Correo Electrónico *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            class="form-control"
+            placeholder="tu@correo.com"
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Contraseña (mínimo 6 caracteres) *</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            class="form-control"
+            placeholder="••••••••"
+            autocomplete="new-password"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="passwordConfirm" class="form-label">Confirmar Contraseña *</label>
+          <input
+            type="password"
+            id="passwordConfirm"
+            name="passwordConfirm"
+            [(ngModel)]="passwordConfirm"
+            required
+            class="form-control"
+            placeholder="••••••••"
+            autocomplete="new-password"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit" [disabled]="cargando">
+          @if (cargando) {
+            <span>Creando cuenta...</span>
+          } @else {
+            <span>Registrarme</span>
+          }
+        </button>
+      </form>
+    }
+
+    <div class="registro-footer">
+      <p>¿Ya tienes cuenta? <a routerLink="/login" class="link-destacado">Inicia sesión</a></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+@if (enviando || exito || error) {
+  <div class="cotiz-overlay" role="status">
+    <div class="cotiz-box">
+      @if (enviando) {
+        <!-- Animación mientras se envía -->
+        @if (!gifFallo) {
+          <img [src]="cotizacionGif" alt="Enviando..." class="cotiz-gif" (error)="onImgError()" />
+        } @else {
+          <div class="cotiz-spinner"></div>
+        }
+        <p class="cotiz-texto">Enviando tu solicitud...</p>
+      }
+
+      @if (exito) {
+        <!-- Éxito -->
+        <div class="cotiz-icono-exito">✓</div>
+        <h3>¡Solicitud enviada!</h3>
+        <p>Revisa el avance de tu pedido en la sección de Mis pedidos.</p>
+        <a routerLink="/mis-pedidos" class="btn-ver-pedidos">Ver mis pedidos</a>
+      }
+
+      @if (error) {
+        <!-- Error -->
+        <div class="cotiz-icono-error">✕</div>
+        <h3>Ocurrió un error</h3>
+        <p class="cotiz-error-msg">{{ error }}</p>
+      }
+    </div>
+  </div>
+}

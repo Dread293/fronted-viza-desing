@@ -1,0 +1,34 @@
+<div class="pagina-header">
+  <div class="container">
+    <a routerLink="/galeria" class="volver-link">← Volver a categorías</a>
+    @if (categoria) {
+      <h1>{{ categoria.nombre }}</h1>
+      @if (categoria.descripcion) {
+        <p>{{ categoria.descripcion }}</p>
+      }
+    } @else if (cargando) {
+      <h1>Cargando categoría...</h1>
+    }
+  </div>
+</div>
+
+<div class="container seccion">
+  @if (error) {
+    <div class="alerta-error">{{ error }}</div>
+  }
+
+  @if (categoria) {
+    <div class="detalle-categoria">
+      <img
+        [src]="categoria.imagenPortadaUrl | imgUrl"
+        [alt]="categoria.nombre"
+        class="imagen-categoria"
+        (error)="$event.target.setAttribute('src', 'assets/placeholder.png')"
+      />
+      @if (categoria.descripcion) {
+        <p>{{ categoria.descripcion }}</p>
+      }
+      <a routerLink="/cotizacion" class="btn-ver-mas">Solicitar cotización</a>
+    </div>
+  }
+</div>

@@ -1,0 +1,67 @@
+<!-- ─── HERO ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <p class="hero-subtitulo">Taller especializado en Tarija, Bolivia</p>
+      <h1 class="hero-titulo">Letreros e Inox<br><span>de Alta Calidad</span></h1>
+      <p class="hero-descripcion">
+        Fabricamos letras corporativas, letreros luminosos, trabajos en acero inoxidable
+        y más. Calidad artesanal con acabados profesionales.
+      </p>
+      <div class="hero-acciones">
+        <a routerLink="/cotizacion" class="btn-hero-primary">
+          Pedir cotización
+        </a>
+        <a routerLink="/galeria" class="btn-hero-secondary">
+          Ver galería
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENSAJE DE ERROR ───────────────────────────────────────────────────── -->
+@if (error) {
+  <div class="alerta-error">{{ error }}</div>
+}
+
+<!-- ─── CATEGORÍAS ────────────────────────────────────────────────────────── -->
+<section class="seccion categorias-seccion">
+  <div class="container">
+    <h2 class="seccion-titulo">Nuestros Servicios</h2>
+    <p class="seccion-subtitulo">Especialistas en múltiples técnicas de diseño y publicidad</p>
+
+    @if (categorias.length === 0) {
+      <p class="estado-vacio">Cargando categorías...</p>
+    } @else {
+      <div class="categorias-grid">
+        @for (cat of categorias; track cat.id) {
+          <a [routerLink]="['/categoria', cat.slug]" class="categoria-card">
+            <div class="categoria-img-wrap">
+              <img
+                [src]="cat.imagenPortadaUrl | imgUrl"
+                [alt]="cat.nombre"
+                class="categoria-img"
+                (error)="$event.target.setAttribute('src', 'assets/placeholder.png')"
+              />
+            </div>
+            <div class="categoria-info">
+              <h3>{{ cat.nombre }}</h3>
+              <p>{{ cat.descripcion }}</p>
+              <span class="categoria-link">Ver trabajos →</span>
+            </div>
+          </a>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ─── CTA FINAL ─────────────────────────────────────────────────────────── -->
+<section class="cta-seccion">
+  <div class="container">
+    <h2>¿Tienes un proyecto en mente?</h2>
+    <p>Cuéntanos qué necesitas y te damos una cotización sin compromiso.</p>
+    <a routerLink="/cotizacion" class="btn-cta">Solicitar cotización gratuita</a>
+  </div>
+</section>

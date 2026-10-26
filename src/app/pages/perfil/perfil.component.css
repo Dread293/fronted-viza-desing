@@ -1,0 +1,119 @@
+.pagina-header {
+  background: linear-gradient(135deg, var(--color-negro) 0%, #1a0000 100%);
+  border-bottom: 3px solid var(--color-rojo);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.pagina-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.pagina-header p {
+  color: #aaa;
+}
+
+.perfil-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.perfil-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+.perfil-card h2 {
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.card-sub {
+  color: var(--color-gris);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+.avatar-circulo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-rojo);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+.perfil-tipo {
+  color: var(--color-gris);
+  font-size: 0.85rem;
+}
+
+.perfil-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.dato-fila {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.dato-label {
+  font-size: 0.8rem;
+  color: var(--color-gris);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.dato-val {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.perfil-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-borde);
+}
+.btn-block {
+  width: 100%;
+}
+.btn-logout-perfil {
+  background: transparent;
+  border: 1.5px solid rgba(220, 38, 38, 0.4);
+  color: #fca5a5;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-logout-perfil:hover {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: #ef4444;
+}
+
+.form-password {
+  margin-top: 1.5rem;
+}

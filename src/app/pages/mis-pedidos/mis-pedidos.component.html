@@ -1,0 +1,70 @@
+<div class="pagina-header">
+  <div class="container header-flex">
+    <div>
+      <h1>Mis Pedidos</h1>
+      <p>Sigue el avance de tus proyectos de inox y letreros en tiempo real</p>
+    </div>
+    <a routerLink="/cotizacion" class="btn btn-primary">
+      + Nueva Cotización
+    </a>
+  </div>
+</div>
+
+<div class="container seccion">
+  @if (error) {
+    <div class="alerta-error">
+      {{ error }}
+      <button (click)="cargarPedidos()" class="btn-reintentar">Reintentar</button>
+    </div>
+  }
+
+  @if (!cargando && !error && pedidos.length === 0) {
+    <div class="vacio-box">
+      <div class="vacio-icono">📋</div>
+      <h3>Aún no tienes pedidos registrados</h3>
+      <p>Solicita una cotización para tu letrero, baranda o estructura de acero inoxidable.</p>
+      <a routerLink="/cotizacion" class="btn btn-primary">Pedir mi primera cotización</a>
+    </div>
+  }
+
+  @if (pedidos.length > 0) {
+    <div class="pedidos-grid">
+      @for (p of pedidos; track p.id) {
+        <div class="pedido-card">
+          <div class="pedido-header">
+            <span class="pedido-id">Pedido #{{ p.id }}</span>
+            <span class="badge" [ngClass]="'badge-' + p.estado">
+              {{ p.estado.replace('_', ' ') }}
+            </span>
+          </div>
+
+          <div class="pedido-body">
+            @if (p.categoria) {
+              <span class="pedido-categoria">{{ p.categoria }}</span>
+            }
+            <p class="pedido-descripcion">{{ p.descripcion }}</p>
+
+            <div class="pedido-fechas">
+              <div class="fecha-item">
+                <span class="fecha-label">Registrado:</span>
+                <span class="fecha-val">{{ formatearFecha(p.fechaRegistro) }}</span>
+              </div>
+              @if (p.fechaEntregaEstimada) {
+                <div class="fecha-item">
+                  <span class="fecha-label">Entrega est.:</span>
+                  <span class="fecha-val">{{ formatearFecha(p.fechaEntregaEstimada) }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="pedido-footer">
+            <a [routerLink]="['/mis-pedidos', p.id]" class="btn btn-secondary btn-detalle">
+              Ver Seguimiento & Diseños →
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,231 @@
+<div class="pagina-header">
+  <div class="container header-flex">
+    <div>
+      <a routerLink="/mis-pedidos" class="volver-link">← Volver a Mis Pedidos</a>
+      <h1>Seguimiento de Pedido #{{ pedidoId }}</h1>
+      @if (pedido?.categoria) {
+        <span class="pedido-cat">{{ pedido?.categoria }}</span>
+      }
+    </div>
+    @if (pedido) {
+      <span class="badge badge-lg" [ngClass]="'badge-' + pedido.estado">
+        {{ pedido.estado.replace('_', ' ') }}
+      </span>
+    }
+  </div>
+</div>
+
+<div class="container seccion">
+  @if (error) {
+    <div class="alerta-error">
+      {{ error }}
+    </div>
+  }
+
+  @if (pedido) {
+    <!-- Barra de progreso -->
+    @if (estadoInfo) {
+      <div class="card-seccion">
+        <div class="progreso-header">
+          <div>
+            <h3>Progreso general: {{ estadoInfo.etiqueta }}</h3>
+            <span class="progreso-pct">{{ estadoInfo.progreso }}%</span>
+          </div>
+          @if (estadoInfo.fechaEntregaEstimada) {
+            <div class="fecha-est">
+              <span>Entrega estimada:</span>
+              <strong>{{ formatearFecha(estadoInfo.fechaEntregaEstimada) }}</strong>
+            </div>
+          }
+        </div>
+
+        <div class="barra-progreso-wrap">
+          <div
+            class="barra-progreso-fill"
+            [style.width.%]="estadoInfo.progreso"
+            [ngClass]="'progreso-' + pedido.estado"
+          ></div>
+        </div>
+
+        <!-- Línea de tiempo -->
+        @if (estadoInfo.lineaTiempo && estadoInfo.lineaTiempo.length > 0) {
+          <div class="timeline">
+            <h4>Línea de Tiempo del Proyecto</h4>
+            <div class="timeline-items">
+              @for (item of estadoInfo.lineaTiempo; track item.fecha; let last = $last) {
+                <div class="timeline-step" [class.timeline-active]="last">
+                  <div class="timeline-punto"></div>
+                  <div class="timeline-content">
+                    <div class="timeline-header-item">
+                      <strong class="timeline-titulo">{{ item.etiqueta }}</strong>
+                      <span class="timeline-fecha">{{ formatearFecha(item.fecha) }}</span>
+                    </div>
+                    @if (item.nota) {
+                      <p class="timeline-nota">{{ item.nota }}</p>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Detalle de la Solicitud -->
+    <div class="card-seccion">
+      <h3>Detalles de la Solicitud</h3>
+      <p class="pedido-desc-texto">{{ pedido.descripcion }}</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Fecha de Registro</span>
+          <span class="info-val">{{ formatearFecha(pedido.fechaRegistro) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Fecha de Entrega Estimada</span>
+          <span class="info-val">{{ formatearFecha(pedido.fechaEntregaEstimada) }}</span>
+        </div>
+        @if (pedido.fechaEntregaReal) {
+          <div class="info-item">
+            <span class="info-label">Fecha de Entrega Real</span>
+            <span class="info-val">{{ formatearFecha(pedido.fechaEntregaReal) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Propuestas de Diseño -->
+    <div class="card-seccion">
+      <div class="seccion-sub-header">
+        <div>
+          <h3>Propuestas de Diseño</h3>
+          <p class="sub-texto">Revisa las maquetas o diseños previos elaborados para tu proyecto. Puedes aprobarlos o solicitar ajustes.</p>
+        </div>
+      </div>
+
+      @if (disenos.length === 0) {
+        <div class="disenos-vacio">
+          <div class="icono-diseno">📐</div>
+          <h4>No hay propuestas de diseño todavía</h4>
+          <p>Nuestro equipo de diseño subirá aquí las propuestas preliminares para tu aprobación.</p>
+        </div>
+      } @else {
+        <div class="disenos-grid">
+          @for (d of disenos; track d.id) {
+            <div class="diseno-card">
+              <div class="diseno-img-wrap" (click)="abrirZoom(d.imagenUrl)">
+                <img
+                  [src]="d.imagenUrl | imgUrl"
+                  [alt]="d.etiqueta"
+                  class="diseno-img"
+                  (error)="$event.target.setAttribute('src', 'assets/placeholder.png')"
+                />
+                <span class="zoom-hint">🔍 Clic para ampliar</span>
+              </div>
+
+              <div class="diseno-info">
+                <div class="diseno-header-row">
+                  <h4 class="diseno-etiqueta">{{ d.etiqueta }}</h4>
+                  <span class="badge" [ngClass]="'badge-' + d.estado">
+                    {{ d.estado }}
+                  </span>
+                </div>
+
+                <div class="diseno-fechas">
+                  <span>Subido: {{ formatearFecha(d.fechaSubida) }}</span>
+                  @if (d.fechaRespuesta) {
+                    <span>Respondido: {{ formatearFecha(d.fechaRespuesta) }}</span>
+                  }
+                </div>
+
+                @if (d.comentarioCliente) {
+                  <div class="comentario-box">
+                    <span class="comentario-label">Tus observaciones:</span>
+                    <p>{{ d.comentarioCliente }}</p>
+                  </div>
+                }
+
+                <!-- Acciones solo si está pendiente -->
+                @if (d.estado === 'pendiente') {
+                  <div class="diseno-acciones">
+                    <button
+                      class="btn btn-primary btn-aprobar"
+                      (click)="aprobarDiseno(d)"
+                      [disabled]="enviandoAccion"
+                    >
+                      ✓ Aprobar Diseño
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-rechazar"
+                      (click)="abrirModalRechazo(d)"
+                      [disabled]="enviandoAccion"
+                    >
+                      ✕ Solicitar Ajustes
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<!-- Modal para solicitar ajustes / rechazar diseño -->
+@if (disenoParaRechazar) {
+  <div class="modal-overlay" (click)="cerrarModalRechazo()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <h3>Solicitar Cambios en el Diseño</h3>
+      <p class="modal-sub">Diseño: <strong>{{ disenoParaRechazar.etiqueta }}</strong></p>
+
+      @if (accionError) {
+        <div class="alerta-error">
+          {{ accionError }}
+        </div>
+      }
+
+      <div class="form-group">
+        <label for="comentario" class="form-label">Indica detalladamente qué cambios deseas:</label>
+        <textarea
+          id="comentario"
+          rows="4"
+          [(ngModel)]="comentarioRechazo"
+          class="form-control"
+          placeholder="Ej: Cambiar el tono del acrílico a rojo más oscuro, agrandar las letras 5cm y centrar el isotipo..."
+        ></textarea>
+      </div>
+
+      <div class="modal-acciones">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cerrarModalRechazo()"
+          [disabled]="enviandoAccion"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="confirmarRechazo()"
+          [disabled]="enviandoAccion"
+        >
+          {{ enviandoAccion ? 'Enviando...' : 'Enviar Observaciones' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Modal para ver imagen ampliada (Zoom) -->
+@if (imagenZoom) {
+  <div class="zoom-overlay" (click)="imagenZoom = null">
+    <div class="zoom-content" (click)="$event.stopPropagation()">
+      <button class="btn-cerrar-zoom" (click)="imagenZoom = null">✕</button>
+      <img [src]="imagenZoom" alt="Diseño ampliado" class="zoom-img" />
+    </div>
+  </div>
+}

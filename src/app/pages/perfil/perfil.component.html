@@ -1,0 +1,117 @@
+<div class="pagina-header">
+  <div class="container">
+    <h1>Mi Perfil</h1>
+    <p>Administra los datos de tu cuenta y credenciales de acceso</p>
+  </div>
+</div>
+
+<div class="container seccion">
+  <div class="perfil-layout">
+    <!-- Columna Información de Usuario -->
+    <div class="perfil-card">
+      <div class="card-header">
+        <div class="avatar-circulo">
+          {{ perfil?.nombre?.charAt(0) || 'U' }}
+        </div>
+        <div>
+          <h2>{{ perfil?.nombre || 'Cargando...' }}</h2>
+          <span class="perfil-tipo">Cliente VIZA Design</span>
+        </div>
+      </div>
+
+      @if (errorPerfil) {
+        <div class="alerta-error">
+          {{ errorPerfil }}
+        </div>
+      }
+
+      <div class="perfil-datos">
+        <div class="dato-fila">
+          <span class="dato-label">Correo Electrónico:</span>
+          <span class="dato-val">{{ perfil?.email }}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-label">Teléfono:</span>
+          <span class="dato-val">{{ perfil?.telefono }}</span>
+        </div>
+        <div class="dato-fila">
+          <span class="dato-label">Cliente desde:</span>
+          <span class="dato-val">{{ formatearFecha(perfil?.fechaRegistro) }}</span>
+        </div>
+      </div>
+
+      <div class="perfil-acciones">
+        <a routerLink="/mis-pedidos" class="btn btn-secondary btn-block">
+          📦 Ver Mis Pedidos
+        </a>
+        <button (click)="cerrarSesion()" class="btn btn-logout-perfil btn-block">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+
+    <!-- Columna Cambiar Contraseña -->
+    <div class="perfil-card">
+      <h2>Seguridad & Contraseña</h2>
+      <p class="card-sub">Actualiza tu contraseña para mantener tu cuenta protegida.</p>
+
+      @if (errorPassword) {
+        <div class="alerta-error">
+          {{ errorPassword }}
+        </div>
+      }
+
+      @if (exitoPassword) {
+        <div class="alerta-exito">
+          ✓ Contraseña actualizada correctamente.
+        </div>
+      }
+
+      <form (ngSubmit)="cambiarPassword()" class="form-password">
+        <div class="form-group">
+          <label for="passActual" class="form-label">Contraseña Actual</label>
+          <input
+            type="password"
+            id="passActual"
+            name="passActual"
+            [(ngModel)]="passwordActual"
+            required
+            class="form-control"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="passNueva" class="form-label">Nueva Contraseña (mínimo 6 caracteres)</label>
+          <input
+            type="password"
+            id="passNueva"
+            name="passNueva"
+            [(ngModel)]="passwordNueva"
+            required
+            minlength="6"
+            class="form-control"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="passConfirm" class="form-label">Confirmar Nueva Contraseña</label>
+          <input
+            type="password"
+            id="passConfirm"
+            name="passConfirm"
+            [(ngModel)]="passwordConfirm"
+            required
+            class="form-control"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="cambiandoPassword">
+          {{ cambiandoPassword ? 'Actualizando...' : 'Actualizar Contraseña' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

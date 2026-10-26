@@ -1,0 +1,58 @@
+.pagina-header {
+  background: linear-gradient(135deg, var(--color-negro) 0%, #1a0000 100%);
+  border-bottom: 3px solid var(--color-rojo);
+  padding: 2.5rem 1.5rem;
+}
+.volver-link {
+  color: var(--color-rojo);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.volver-link:hover { text-decoration: underline; }
+.pagina-header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.trabajos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.5rem;
+}
+.trabajo-card {
+  background: var(--color-card);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid var(--color-borde);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.trabajo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.trabajo-img-wrap { height: 200px; overflow: hidden; }
+.trabajo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.trabajo-card:hover .trabajo-img { transform: scale(1.05); }
+.trabajo-info { padding: 1rem 1.25rem; }
+.trabajo-info h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 0.3rem;
+}
+.trabajo-ciudad { font-size: 0.83rem; color: var(--color-gris); }
+.estado-vacio { text-align: center; padding: 4rem 0; color: var(--color-gris); }
+
+.detalle-categoria { max-width: 900px; margin: 0 auto; text-align: center; }
+.imagen-categoria { display: block; width: 100%; max-height: 520px; object-fit: cover; border-radius: 12px; margin: 0 auto 1.5rem; }
+.detalle-categoria p { color: var(--color-gris); margin-bottom: 1.5rem; }

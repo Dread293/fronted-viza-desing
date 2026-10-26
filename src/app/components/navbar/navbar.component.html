@@ -1,0 +1,55 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <a routerLink="/" class="navbar-logo" (click)="cerrarMenu()">
+      <img src="assets/logo.png" alt="VIZA Design" class="logo-img" />
+    </a>
+
+    <!-- Links de navegación (escritorio) -->
+    <ul class="navbar-links">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
+      <li><a routerLink="/galeria" routerLinkActive="active">Galería</a></li>
+    </ul>
+
+    <!-- Botón cotización (siempre visible) -->
+    <a routerLink="/cotizacion" class="btn-cotizar">
+      <span>Pedir cotización</span>
+    </a>
+
+    <!-- Área de usuario (escritorio) -->
+    <div class="navbar-user">
+      @if (auth.estaLogueado()) {
+        <a routerLink="/mis-pedidos" class="nav-link-user">Mis pedidos</a>
+        <a routerLink="/perfil" class="nav-link-user">Perfil</a>
+        <span class="usuario-nombre">{{ auth.cliente()?.nombre }}</span>
+        <button (click)="cerrarSesion()" class="btn-logout">Cerrar sesión</button>
+      } @else {
+        <a routerLink="/login" class="btn-login">Iniciar sesión</a>
+        <a routerLink="/registro" class="btn-registro">Registrarse</a>
+      }
+    </div>
+
+    <!-- Botón hamburguesa (móvil) -->
+    <button class="navbar-hamburger" (click)="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Menú móvil desplegable -->
+  @if (menuAbierto) {
+    <div class="navbar-mobile">
+      <a routerLink="/" (click)="cerrarMenu()">Inicio</a>
+      <a routerLink="/galeria" (click)="cerrarMenu()">Galería</a>
+      <a routerLink="/cotizacion" (click)="cerrarMenu()" class="mobile-cotizar">Pedir cotización</a>
+      @if (auth.estaLogueado()) {
+        <a routerLink="/mis-pedidos" (click)="cerrarMenu()">Mis pedidos</a>
+        <a routerLink="/perfil" (click)="cerrarMenu()">Perfil</a>
+        <span class="mobile-nombre">{{ auth.cliente()?.nombre }}</span>
+        <button (click)="cerrarSesion()">Cerrar sesión</button>
+      } @else {
+        <a routerLink="/login" (click)="cerrarMenu()">Iniciar sesión</a>
+        <a routerLink="/registro" (click)="cerrarMenu()">Registrarse</a>
+      }
+    </div>
+  }
+</nav>

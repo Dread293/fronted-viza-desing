@@ -1,0 +1,83 @@
+<div class="pagina-header">
+  <div class="container">
+    <h1>Solicitar Cotización</h1>
+    <p>
+      Cuéntanos sobre tu proyecto de letrero o acero inoxidable y te responderemos a la brevedad.
+    </p>
+  </div>
+</div>
+
+<div class="container seccion">
+  <div class="cotizacion-card">
+    @if (!auth.estaLogueado()) {
+      <div class="alerta-info aviso-auth">
+        <h3>¿Ya tienes cuenta o eres nuevo cliente?</h3>
+        <p>
+          Para registrar tu pedido y darle seguimiento en tiempo real, necesitas iniciar sesión con
+          tu cuenta.
+        </p>
+        <div class="botones-auth">
+          <a routerLink="/login" [queryParams]="{ redirect: '/cotizacion' }" class="btn btn-primary"
+            >Iniciar Sesión</a
+          >
+          <a routerLink="/registro" class="btn btn-secondary">Crear Cuenta Nueva</a>
+        </div>
+      </div>
+    } @else {
+      <form (ngSubmit)="enviarCotizacion()" class="cotizacion-form">
+        <div class="cliente-info-box">
+          <span class="cliente-info-label">Cotizando como:</span>
+          <strong>{{ auth.cliente()?.nombre }}</strong> ({{ auth.cliente()?.email }})
+        </div>
+
+        @if (formularioInvalido) {
+          <div class="alerta-error">Por favor ingresa la descripción de tu proyecto.</div>
+        }
+
+        <div class="form-group">
+          <label for="categoria" class="form-label">Categoría del trabajo (opcional)</label>
+          <select id="categoria" name="categoria" [(ngModel)]="categoriaId" class="form-control">
+            <option [ngValue]="null">-- Selecciona una categoría --</option>
+            @for (cat of categorias; track cat.id) {
+              <option [ngValue]="cat.id">{{ cat.nombre }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion" class="form-label">Descripción detallada del pedido *</label>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            [(ngModel)]="descripcion"
+            required
+            rows="5"
+            class="form-control"
+            placeholder="Especifica medidas, materiales (acero inox, acrílico, luces neón), tipo de letrero, acabados deseados..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaEntrega" class="form-label"
+            >Fecha estimada en la que lo necesitas (opcional)</label
+          >
+          <input
+            type="date"
+            id="fechaEntrega"
+            name="fechaEntrega"
+            [(ngModel)]="fechaEntregaEstimada"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary btn-submit" [disabled]="enviando">
+            Enviar Solicitud de Cotización
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>
+
+<!-- Overlay animado con GIF y feedback -->

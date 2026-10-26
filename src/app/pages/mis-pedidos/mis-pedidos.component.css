@@ -1,0 +1,143 @@
+.pagina-header {
+  background: linear-gradient(135deg, var(--color-negro) 0%, #1a0000 100%);
+  border-bottom: 3px solid var(--color-rojo);
+  padding: 2.5rem 1.5rem;
+}
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.pagina-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.pagina-header p {
+  color: #aaa;
+}
+
+.btn-reintentar {
+  margin-left: 1rem;
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.vacio-box {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.vacio-icono {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.vacio-box h3 {
+  font-size: 1.3rem;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.vacio-box p {
+  color: var(--color-gris);
+  margin-bottom: 1.5rem;
+}
+
+.pedidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.pedido-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-borde);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.pedido-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(204, 24, 30, 0.4);
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-borde);
+  background: rgba(255, 255, 255, 0.02);
+}
+.pedido-id {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.pedido-body {
+  padding: 1.25rem;
+  flex: 1;
+}
+.pedido-categoria {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--color-rojo);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+.pedido-descripcion {
+  color: var(--color-texto);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pedido-fechas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 0.75rem;
+  font-size: 0.85rem;
+}
+.fecha-item {
+  display: flex;
+  justify-content: space-between;
+}
+.fecha-label {
+  color: var(--color-gris);
+}
+.fecha-val {
+  color: #fff;
+  font-weight: 500;
+}
+
+.pedido-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--color-borde);
+  background: rgba(0, 0, 0, 0.2);
+}
+.btn-detalle {
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
+}

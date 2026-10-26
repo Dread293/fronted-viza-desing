@@ -1,0 +1,41 @@
+<div class="pagina-header">
+  <div class="container">
+    <h1>Nuestras categorías</h1>
+    <p>Conoce los servicios y tipos de trabajos que realizamos</p>
+  </div>
+</div>
+
+<div class="container seccion">
+  @if (error) {
+    <div class="alerta-error">{{ error }}</div>
+  }
+
+  @if (cargando) {
+    <div class="estado-vacio"><p>Cargando categorías...</p></div>
+  } @else if (categorias.length === 0 && !error) {
+    <div class="estado-vacio"><p>No hay categorías disponibles por ahora.</p></div>
+  } @else {
+    <div class="galeria-grid">
+      @for (cat of categorias; track cat.id) {
+        <a [routerLink]="['/categoria', cat.slug]" class="trabajo-card">
+          <div class="trabajo-img-wrap">
+            <img
+              [src]="cat.imagenPortadaUrl | imgUrl"
+              [alt]="cat.nombre"
+              class="trabajo-img"
+              (error)="$event.target.setAttribute('src', 'assets/placeholder.png')"
+            />
+            <span class="trabajo-categoria">{{ cat.nombre }}</span>
+          </div>
+          <div class="trabajo-info">
+            <h3>{{ cat.nombre }}</h3>
+            @if (cat.descripcion) {
+              <p class="trabajo-ciudad">{{ cat.descripcion }}</p>
+            }
+            <span class="categoria-link">Ver categoría →</span>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</div>

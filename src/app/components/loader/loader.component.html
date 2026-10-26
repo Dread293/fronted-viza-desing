@@ -1,0 +1,14 @@
+@if (loaderService.visible()) {
+  <div class="loader-overlay" role="status" aria-label="Cargando">
+    <div class="loader-box">
+      @if (!gifFallo) {
+        <!-- GIF de animación (reemplaza el archivo assets/loader.gif cuando lo tengas) -->
+        <img [src]="loaderGif" alt="Cargando..." class="loader-gif" (error)="onImgError()" />
+      } @else {
+        <!-- Spinner CSS de respaldo si el GIF no carga -->
+        <div class="loader-spinner"></div>
+      }
+      <p class="loader-texto">Cargando...</p>
+    </div>
+  </div>
+}

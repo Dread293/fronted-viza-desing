@@ -1,0 +1,59 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <a routerLink="/" class="logo">
+        <span class="logo-viza">VIZA</span><span class="logo-design">Design</span>
+      </a>
+      <h2>Iniciar Sesión</h2>
+      <p>Accede para dar seguimiento a tus pedidos y cotizaciones</p>
+    </div>
+
+    @if (errorMensaje) {
+      <div class="alerta-error">
+        {{ errorMensaje }}
+      </div>
+    }
+
+    <form (ngSubmit)="iniciarSesion()" class="login-form">
+      <div class="form-group">
+        <label for="correo" class="form-label">Correo Electrónico</label>
+        <input
+          type="email"
+          id="correo"
+          name="correo"
+          [(ngModel)]="correo"
+          required
+          class="form-control"
+          placeholder="tu@correo.com"
+          autocomplete="email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          class="form-control"
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-submit" [disabled]="cargando">
+        @if (cargando) {
+          <span>Ingresando...</span>
+        } @else {
+          <span>Entrar</span>
+        }
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>¿No tienes cuenta aún? <a routerLink="/registro" class="link-destacado">Regístrate aquí</a></p>
+    </div>
+  </div>
+</div>
